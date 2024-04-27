@@ -12,11 +12,19 @@ func FindNestedValue(data any, path string) (any, error) {
 	parts := strings.Split(path, ".")
 
 	for i, part := range parts {
-		// Handle pointers and interfaces
-		if value.Kind() == reflect.Ptr || value.Kind() == reflect.Interface {
+		// Handle interfaces
+		if value.Kind() == reflect.Interface {
 			value = value.Elem()
 			if !value.IsValid() {
-				return nil, fmt.Errorf("dereferencing pointer/interface resulted in invalid value")
+				return nil, fmt.Errorf("dereferencing interface resulted in invalid value")
+			}
+		}
+
+		// Handle pointers
+		if value.Kind() == reflect.Ptr {
+			value = value.Elem()
+			if !value.IsValid() {
+				return nil, fmt.Errorf("dereferencing pointer resulted in invalid value")
 			}
 		}
 

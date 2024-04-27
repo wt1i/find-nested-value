@@ -34,7 +34,7 @@ func main() {
 		"k1": A{
 			B: &B{
 				C: &C{
-					Keys: map[string]DSData{"k2": D{
+					Keys: map[string]DSData{"k2": &D{
 						Value: "101",
 					}}},
 			},
